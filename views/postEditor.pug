@@ -1,0 +1,56 @@
+doctype html
+html(lang='tr')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Clean Blog - Start Bootstrap Theme
+    link(rel='icon' type='image/x-icon' href='assets/favicon.ico')
+    // Font Awesome icons (free version)
+    script(src='https://use.fontawesome.com/releases/v6.1.0/js/all.js' crossorigin='anonymous')
+    // Google fonts
+    link(href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css')
+    // Core theme CSS (includes Bootstrap)
+    link(href='css/style.css' rel='stylesheet')
+    link(href='css/edit.css' rel='stylesheet')
+    link(href='froala_editor/css/froala_editor.min.css' rel='stylesheet')
+    link(href='froala_editor/css/plugins.pkgd.min.css' rel='stylesheet')
+  body
+    // Navigation
+    include partials/navigation
+    // Page Header
+    include partials/postHeader
+    // Post Content
+    article.mb-4
+      .container.px-4.px-lg-5
+        .row.gx-4.gx-lg-5.justify-content-center
+          .col-md-10.col-lg-8.col-xl-7
+            form#advancedForm.post-form
+              .form-group
+                label(for='titleInput') Arkaplan Görseli
+                input#backgroundInput.form-control(type='file' accept='image/*')
+              .form-group.mt-3
+                label(for='titleInput') Sayfa Başlığı
+                input#titleInput.form-control(type='text' placeholder='Başlık' value=title)
+              .form-group.mt-3
+                label(for='titleInput') Alt Başlık
+                input#subtitleInput.form-control(type='text' placeholder='Alt Başlık' value=subtitle)
+              .form-group.mt-3
+                label Gönderi İçeriği
+                #editor(html=content)
+              .form-group.mt-4
+                button.btn.btn-primary Düzenle
+    // Footer
+    include partials/pageFooter
+    // Modal
+    include partials/modal
+    // Bootstrap core JS
+    script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript')
+    // Core theme JS
+    script(src='js/script.js' type='text/javascript')
+    script(src='js/axios.min.js' type='text/javascript')
+    script(src='froala_editor/js/froala_editor.min.js' type='text/javascript')
+    script(src='froala_editor/js/plugins.pkgd.min.js' type='text/javascript')
+    script(src='js/edit.js' type='text/javascript' )

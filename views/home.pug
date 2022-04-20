@@ -1,0 +1,56 @@
+doctype html
+html(lang='tr')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Clean Blog - Start Bootstrap Theme
+    link(rel='icon' type='image/x-icon' href='assets/favicon.ico')
+    // Font Awesome icons (free version)
+    script(src='https://use.fontawesome.com/releases/v6.1.0/js/all.js' crossorigin='anonymous')
+    // Google fonts
+    link(href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css')
+    // Core theme CSS (includes Bootstrap)
+    link(href='css/style.css' rel='stylesheet')
+  body
+    // Navigation
+    include partials/navigation
+    // Page Header
+    include partials/pageHeader
+    // Main Content
+    .container.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          include partials/alert
+          if (user)
+            .text-center
+              a(href='/anasayfayi-duzenle')
+                i.fa-solid.fa-gear(style="font-size: 3rem;")
+          // Post preview
+          .post-preview
+            a(href='post.html')
+              h2.post-title Failure is not an option
+              h3.post-subtitle
+                | Many say exploration is part of our destiny, but it’s actually our duty to future
+                | generations.
+            p.post-meta
+              | Posted by
+              a(href='#!') Start Bootstrap
+              |             on July 8, 2022
+          // Divider
+          hr.my-4
+          // Pager
+          .d-flex.justify-content-end.mb-4
+            a.btn.btn-primary.text-uppercase(href='#!')
+              | Older Posts
+              | →
+    // Footer
+    include partials/pageFooter
+    // Modal
+    include partials/modal
+    // Bootstrap core JS
+    script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript') 
+    // Core theme JS
+    script(src='js/script.js' type='text/javascript')

@@ -1,0 +1,4 @@
+if(alert)
+  .alert.alert-dismissible.fade.show(class=`alert-${alert.type}`)
+    span=alert.text
+    button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')

@@ -1,0 +1,18 @@
+###
+POST http://localhost:3000/user/register HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "kadir",
+  "password": "1",
+  "email": "1@g.c"
+}
+###
+POST http://localhost:3000/user/login HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "kadir",
+  "password": "1",
+  "email": "1@g.c"
+}

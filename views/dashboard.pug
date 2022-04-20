@@ -1,0 +1,98 @@
+doctype html
+html(lang='tr')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Admin Paneli
+    link(href='bootstrap5/css/bootstrap.min.css' rel='stylesheet')
+    link(href='css/dashboard.css' rel='stylesheet')
+    meta(charset='utf-8')
+  body
+    svg(xmlns='http://www.w3.org/2000/svg' style='display: none;')
+      symbol#bootstrap(viewbox='0 0 118 94')
+        title Bootstrap
+        path(fill-rule='evenodd' clip-rule='evenodd' d='M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z')
+      symbol#home(viewbox='0 0 16 16')
+        path(d='M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z')
+      symbol#about(viewbox='0 0 512 512')
+        // ! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
+        path(fill-rule='evenodd' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c39.77 0 72 32.24 72 72S295.8 272 256 272c-39.76 0-72-32.24-72-72S216.2 128 256 128zM256 448c-52.93 0-100.9-21.53-135.7-56.29C136.5 349.9 176.5 320 224 320h64c47.54 0 87.54 29.88 103.7 71.71C356.9 426.5 308.9 448 256 448z')
+      symbol#contact(viewbox='0 0 512 512')
+        path(d='M511.2 387l-23.25 100.8c-3.266 14.25-15.79 24.22-30.46 24.22C205.2 512 0 306.8 0 54.5c0-14.66 9.969-27.2 24.22-30.45l100.8-23.25C139.7-2.602 154.7 5.018 160.8 18.92l46.52 108.5c5.438 12.78 1.77 27.67-8.98 36.45L144.5 207.1c33.98 69.22 90.26 125.5 159.5 159.5l44.08-53.8c8.688-10.78 23.69-14.51 36.47-8.975l108.5 46.51C506.1 357.2 514.6 372.4 511.2 387z')
+      symbol#about(viewbox='0 0 512 512')
+        path(fill-rule='evenodd' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c39.77 0 72 32.24 72 72S295.8 272 256 272c-39.76 0-72-32.24-72-72S216.2 128 256 128zM256 448c-52.93 0-100.9-21.53-135.7-56.29C136.5 349.9 176.5 320 224 320h64c47.54 0 87.54 29.88 103.7 71.71C356.9 426.5 308.9 448 256 448z')
+      symbol#postAdd(viewbox='0 0 512 512')
+        path(d='M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z')
+      symbol#logout(viewbox='0 0 512 512')
+        path(d='M160 416H96c-17.67 0-32-14.33-32-32V128c0-17.67 14.33-32 32-32h64c17.67 0 32-14.33 32-32S177.7 32 160 32H96C42.98 32 0 74.98 0 128v256c0 53.02 42.98 96 96 96h64c17.67 0 32-14.33 32-32S177.7 416 160 416zM502.6 233.4l-128-128c-12.51-12.51-32.76-12.49-45.25 0c-12.5 12.5-12.5 32.75 0 45.25L402.8 224H192C174.3 224 160 238.3 160 256s14.31 32 32 32h210.8l-73.38 73.38c-12.5 12.5-12.5 32.75 0 45.25s32.75 12.5 45.25 0l128-128C515.1 266.1 515.1 245.9 502.6 233.4z')
+    nav.navbar.navbar-light.bg-light
+      .container-fluid
+        a.navbar-brand(href='#') Admin Paneli
+        button.navbar-toggler#navbarToggler
+          span.navbar-toggler-icon
+    .d-flex.flex-column.flex-shrink-0.p-3.bg-light.sidebar-container#menu
+      a.d-flex.align-items-center.mb-3.mb-md-0.me-md-auto.link-dark.text-decoration-none(href='/')
+        svg.bi.me-2(width='40' height='32')
+          use(xlink:href='#bootstrap')
+        span.fs-4 Sidebar
+      hr
+      ul.nav.nav-pills.flex-column.mb-auto
+        li.nav-item
+          a.nav-link.active(href='/' aria-current='page')
+            svg.bi.me-2(width='16' height='16')
+              use(xlink:href='#home')
+            | Anasayfa
+        li
+          a.nav-link.link-dark(href='/hakkimda')
+            svg.bi.me-2(width='16' height='16')
+              use(xlink:href='#about')
+            | Hakkimda
+        li
+          a.nav-link.link-dark(href='/iletisim')
+            svg.bi.me-2(width='16' height='16')
+              use(xlink:href='#contact')
+            | İletişim
+        li
+          a.nav-link.link-dark(href='/gonderi-olustur')
+            svg.bi.me-2(width='16' height='16')
+              use(xlink:href='#postAdd')
+            | Yeni Gönderi Oluştur
+      hr
+      a.nav-link.link-dark(href='/cikis-yap')
+        svg.bi.me-2(width='16' height='16')
+          use(xlink:href='#logout')
+        | Çıkış Yap
+    .container.pt-5
+      include partials/alert
+      form.row.g-3.needs-validation(action='/kullanici-verisini-guncelle' method='POST')
+        h2 Kullanıcı Verisini Güncelle
+        .col-md-6
+          label.form-label(for='name') İsim
+          input#name.form-control(type='text' name='name' value=user.name required)
+        .col-md-6
+          label.form-label(for='email') Email
+          input#email.form-control(type='email' name='email' value=user.email required)
+        .col-md-6
+          label.form-label(for='email') İletişim Emaili
+          input#contactEmail.form-control(type='email' name='contactEmail' value=user.contactEmail)
+        .col-md-6
+          label.form-label(for='email') Email Uygulama Şifresi
+          input#contactPass.form-control(type='text' name='contactPass')
+        .col-12
+          button.btn.btn-primary(type='submit') Güncelle
+      form#passwordChangeForm.row.g-3.mt-5(action='/kullanici-sifresini-degistir' method='POST')
+        h2 Şifreyi Değiştir
+        .col-md-6
+          label.form-label(for='name') Şifre
+          input#password.form-control(type='password' name='password')
+          div.valid-feedback Süper!
+          div.invalid-feedback En az 8 karakterli bir şifre seçin!
+        .col-md-6
+          label.form-label(for='email') Şifre Yeniden
+          input#passwordConfirm.form-control(type='password')
+          div.valid-feedback Süper!
+          div.invalid-feedback Şifreler Uyuşmuyor!
+        .col-12
+          button.btn.btn-primary(type='submit') Değiştir
+  script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript') 
+  script(src='js/dashboard.js' type='text/javascript') 
