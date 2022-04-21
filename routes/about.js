@@ -4,7 +4,9 @@ const fs = require('fs')
 router.get('/hakkimda', (req, res) => { 
   fs.readFile('./page/about.json', 'utf8', (err, page) => {
     if (err) console.error(err)
-    res.render('about', !page ? {} : JSON.parse(page))
+    const alert = req.flash('alert')[0]
+    page = !page ? {} : JSON.parse(page)
+    res.render('about', Object.assign(page, { alert }))
   })
 })
 
@@ -35,9 +37,11 @@ router.post('/hakkimda-sayfasini-duzenle', (req, res) => {
       if (background) {
         background.mv(`./public${backgroundPath}`, (err) => {
           if (err) console.error(err)
+          req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
           res.sendStatus(200)
         })
       } else {
+        req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
         res.sendStatus(200)
       }
     })

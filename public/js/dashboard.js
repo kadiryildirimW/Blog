@@ -8,6 +8,7 @@ const passwordConfirm = document.getElementById('passwordConfirm')
 
 const passwordChangeForm = document.getElementById('passwordChangeForm')
 
+if (passwordChangeForm)
 passwordChangeForm.addEventListener('submit', (event) => {
   passwordChangeForm.classList.add('was-submitted')
   if (password.value.length < 8) {
@@ -24,6 +25,7 @@ passwordChangeForm.addEventListener('submit', (event) => {
   }
 })
 
+if (password)
 password.addEventListener('input', () => {
   if (!passwordChangeForm.classList.contains('was-submitted')) return
   if (password.value.length < 8) {
@@ -49,6 +51,7 @@ password.addEventListener('input', () => {
   }
 })
 
+if(passwordConfirm)
 passwordConfirm.addEventListener('input', () => {
   if (!passwordChangeForm.classList.contains('was-submitted')) return
   if (!passwordConfirm.value) {
@@ -66,3 +69,44 @@ passwordConfirm.addEventListener('input', () => {
     passwordConfirm.classList.remove('is-invalid')
   }
 })
+
+let tr
+const result = document.getElementById('result')
+if (result)
+axios.get(`/gonderiyi-getir?sayfa=1&limit=50`).then((res) => {
+  result.innerHTML = ''
+  res.data.docs.forEach((post, index) => {
+    tr = document.createElement('tr')
+    tr.innerHTML = `
+      <th scope="row">${index + 1}</th>
+      <td>${post.title}</td>
+      <td>${post.date}</td>
+    `
+    tr.addEventListener('click', () => { window.location.href = post.handle })
+    result.append(tr)
+  })
+}).catch(err => console.error(err))
+
+const searchBar = document.getElementById('search-bar')
+if (searchBar) {
+  let search
+  searchBar.addEventListener('input', async () => {
+    try {
+      search = searchBar.value.trim()
+      const res = await axios.get(`/gonderiyi-getir?sayfa=1&limit=20&ara=${search}`)
+      result.innerHTML = ''
+      res.data.docs.forEach((post, index) => {
+        tr = document.createElement('tr')
+        tr.innerHTML = `
+        <th scope="row">${index + 1}</th>
+        <td>${post.title}</td>
+        <td>${post.date}</td>
+        `
+        tr.addEventListener('click', () => { window.location.href = post.handle })
+        result.append(tr)
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  })
+}

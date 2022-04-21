@@ -7,6 +7,7 @@ html(lang='tr')
     link(href='bootstrap5/css/bootstrap.min.css' rel='stylesheet')
     link(href='css/dashboard.css' rel='stylesheet')
     meta(charset='utf-8')
+    link(href='css/edit.css' rel='stylesheet')
   body
     svg(xmlns='http://www.w3.org/2000/svg' style='display: none;')
       symbol#logo(viewbox='0 0 512 512')
@@ -29,6 +30,8 @@ html(lang='tr')
         path(d='M512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM280 292.7V88C280 74.75 269.3 64 256 64C242.7 64 232 74.75 232 88V292.7C208.5 302.1 192 325.1 192 352C192 387.3 220.7 416 256 416C291.3 416 320 387.3 320 352C320 325.1 303.5 302.1 280 292.7zM144 176C161.7 176 176 161.7 176 144C176 126.3 161.7 112 144 112C126.3 112 112 126.3 112 144C112 161.7 126.3 176 144 176zM96 224C78.33 224 64 238.3 64 256C64 273.7 78.33 288 96 288C113.7 288 128 273.7 128 256C128 238.3 113.7 224 96 224zM416 288C433.7 288 448 273.7 448 256C448 238.3 433.7 224 416 224C398.3 224 384 238.3 384 256C384 273.7 398.3 288 416 288zM368 112C350.3 112 336 126.3 336 144C336 161.7 350.3 176 368 176C385.7 176 400 161.7 400 144C400 126.3 385.7 112 368 112z')
       symbol#postManage(viewbox='0 0 512 512')
         path(d='M152.1 38.16C161.9 47.03 162.7 62.2 153.8 72.06L81.84 152.1C77.43 156.9 71.21 159.8 64.63 159.1C58.05 160.2 51.69 157.6 47.03 152.1L7.029 112.1C-2.343 103.6-2.343 88.4 7.029 79.03C16.4 69.66 31.6 69.66 40.97 79.03L63.08 101.1L118.2 39.94C127 30.09 142.2 29.29 152.1 38.16V38.16zM152.1 198.2C161.9 207 162.7 222.2 153.8 232.1L81.84 312.1C77.43 316.9 71.21 319.8 64.63 319.1C58.05 320.2 51.69 317.6 47.03 312.1L7.029 272.1C-2.343 263.6-2.343 248.4 7.029 239C16.4 229.7 31.6 229.7 40.97 239L63.08 261.1L118.2 199.9C127 190.1 142.2 189.3 152.1 198.2V198.2zM224 96C224 78.33 238.3 64 256 64H480C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H256C238.3 128 224 113.7 224 96V96zM224 256C224 238.3 238.3 224 256 224H480C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H256C238.3 288 224 273.7 224 256zM160 416C160 398.3 174.3 384 192 384H480C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416zM0 416C0 389.5 21.49 368 48 368C74.51 368 96 389.5 96 416C96 442.5 74.51 464 48 464C21.49 464 0 442.5 0 416z')
+      symbol#search(viewbox='0 0 512 512')
+        path(d='M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z')
     nav.navbar.navbar-light.bg-light
       .container-fluid
         a.navbar-brand(href='#') Admin Paneli
@@ -57,7 +60,7 @@ html(lang='tr')
               use(xlink:href='#contact')
             | İletişim
         li
-          a.nav-link.active(href='/admin-paneli')
+          a.nav-link.link-dark(href='/admin-paneli')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#dashboard')
             | Admin Paneli
@@ -67,7 +70,7 @@ html(lang='tr')
               use(xlink:href='#postAdd')
             | Yeni Gönderi Oluştur
         li
-          a.nav-link.link-dark(href='/gonderileri-yonet')
+          a.nav-link.active(href='/gonderileri-yonet')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#postManage')
             | Gönderileri Yönet
@@ -78,39 +81,19 @@ html(lang='tr')
         | Çıkış Yap
     .container.py-5
       include partials/alert
-      form.row.g-3(action='/kullanici-verisini-guncelle' method='POST')
-        h2 Kullanıcı Verisini Güncelle
-        .col-md-6
-          label.form-label(for='name') İsim
-          input#name.form-control(type='text' name='name' value=user.name required)
-        .col-md-6
-          label.form-label(for='email') Email
-          input#email.form-control(type='email' name='email' value=user.email required)
-        .col-12
-          button.btn.btn-primary(type='submit') Güncelle
-      form.row.g-3.mt-5(action='/postaciyi-guncelle' method='POST' required)
-        h2 Postacı Verisini Güncelle
-        .col-md-6
-          label.form-label(for='maillerAdress') Postacı Adresi
-          input#maillerAdress.form-control(type='email' name='maillerAdress' required)
-        .col-md-6
-          label.form-label(for='maillerPass') Postacı Şifresi
-          input#maillerPass.form-control(type='text' name='maillerPass' required)
-        .col-12
-            button.btn.btn-primary(type='submit') Güncelle
-      form#passwordChangeForm.row.g-3.mt-5(action='/kullanici-sifresini-degistir' method='POST')
-        h2 Şifreyi Değiştir
-        .col-md-6
-          label.form-label(for='name') Şifre
-          input#password.form-control(type='password' name='password')
-          div.valid-feedback Süper!
-          div.invalid-feedback En az 8 karakterli bir şifre seçin!
-        .col-md-6
-          label.form-label(for='email') Şifre Yeniden
-          input#passwordConfirm.form-control(type='password')
-          div.valid-feedback Süper!
-          div.invalid-feedback Şifreler Uyuşmuyor!
-        .col-12
-          button.btn.btn-primary(type='submit') Değiştir
+      .input-group.flex-nowrap.input-group-lg.mb-5
+        span#addon-wrapping.input-group-text
+          svg.bi.me-2(width='16' height='16')
+            use(xlink:href='#search')
+        input#search-bar.form-control(type='text' placeholder='Gönderi araması' aria-label='Username' aria-describedby='addon-wrapping')
+      table.table.table-hover
+        thead
+          tr
+            th(scope='col') #
+            th(scope='col') Başlık
+            th(scope='col') Tarih
+        tbody#result
+
   script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript') 
+  script(src='js/axios.min.js' type='text/javascript') 
   script(src='js/dashboard.js' type='text/javascript') 

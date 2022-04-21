@@ -12,11 +12,7 @@ function previewPhoto(file, tag) {
 function openModal () {
   document.getElementById('overlay').style.display = 'block'
   document.getElementById('modal').style.display = 'block'
-}
-
-function closeModal () {
-  document.getElementById('overlay').style.display = 'none'
-  document.getElementById('modal').style.display = 'none'
+  document.body.style.overflow = 'hidden'
 }
 
 const title = document.getElementById('title')
@@ -74,6 +70,10 @@ if (contactDescription && contactDescriptionInput) {
     }
   })
 }
+
+const processScreen = document.getElementById('processScreen')
+const processRate = document.getElementById('processRate')
+
 let editorTag = document.getElementById('editor')
 if (editorTag) {
   let editor = new FroalaEditor('#editor', {
@@ -86,16 +86,22 @@ if (editorTag) {
     fontFamilySelection: true,
     imageManagerLoadURL: '/resimler',
     imageManagerLoadMethod: 'GET',
+    imageManagerDeleteURL: '/resim-sil',
+    imageManagerDeleteMethod: 'DELETE',
+    imageManagerScrollOffset: 10,
     imageUploadURL: '/resim-kaydet',
     imageUploadMethod: 'POST',
-    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    videoUploadURL: '/video-kaydet',
+    videoUploadMethod: '/POST',
+    spellcheck: false,
     saveURL: advancedForm.getAttribute('action') ? advancedForm.getAttribute('action') : window.location.href ,
     saveMethod: 'POST',
     saveParam: 'content',
     saveParams: {},
-    saveInterval: 2000,
+    saveInterval: 10000,
     events: { 
-      'image.removed': function ($img) {}  
+      'image.removed': function ($img) {
+      }  
     }
   }, function () {
     editor.html.set(editorTag.getAttribute('html'))
@@ -112,24 +118,18 @@ if (editorTag) {
         if (typeof contentValue === 'string') formData.append('content', contentValue ? contentValue : ' ' )
         if (backgroundValue) {
           formData.append('background', backgroundValue)
-          if (oldBackgroundPath) {
-            formData.append('oldBackgroundPath', oldBackgroundPath)
-          }
+          if (oldBackgroundPath) formData.append('oldBackgroundPath', oldBackgroundPath)
         }
         axios.post(window.location.href, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
+          headers: { 'Content-Type': 'multipart/form-data' },
           onUploadProgress: progressEvent => {
             processRate.innerText = `${Math.floor(progressEvent.loaded / progressEvent.total * 100)} %`
+            processRate.style.width = `${Math.floor(progressEvent.loaded / progressEvent.total * 100)}%`
           }
         })
         .then(response => {
-          if (advancedForm.classList.contains('post-form')) {
-            window.location.href = `/${response.data}`
-          } else {
-            window.location.href = advancedForm.getAttribute('redirect')
-          } 
+          if (advancedForm.classList.contains('post-form')) window.location.href = `/${response.data}`
+          else window.location.href = advancedForm.getAttribute('redirect')
         })
         .catch(err => { console.error(err) })
       })
@@ -138,9 +138,6 @@ if (editorTag) {
   if (titleInput) titleInput.addEventListener('input', () => { editor.opts.saveParams.title = titleValue })
   if (subtitleInput) subtitleInput.addEventListener('input', () => { editor.opts.saveParams.subtitle = subtitleValue })
 }
-
-const processScreen = document.getElementById('processScreen')
-const processRate = document.getElementById('processRate')
 
 const form = document.getElementById('form')
 if (form) {
@@ -152,24 +149,46 @@ if (form) {
     if (subtitleValue) formData.append('subtitle', subtitleValue)
     if (backgroundValue) formData.append('background', backgroundValue)
     if (contactDescriptionValue) formData.append('contactDescription', contactDescriptionValue)
-    
     axios.post(form.getAttribute('action'), formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: progressEvent => {
         processRate.innerText = `${Math.floor(progressEvent.loaded / progressEvent.total * 100)} %`
+        processRate.style.width = `${Math.floor(progressEvent.loaded / progressEvent.total * 100)}%`
       }
     })
     .then(response => {
       if (response.status === 200) {
-        if (form.getAttribute('redirect')) {
-          window.location.href = form.getAttribute('redirect')
-        } else {
-          window.location.reload()
-        }
+        if (form.getAttribute('redirect')) window.location.href = form.getAttribute('redirect')
+        else window.location.reload()
       }
     })
     .catch(err => { console.error(err) })
+  })
+}
+
+const eye = document.getElementById('eye')
+const eyeSlash = document.getElementById('eye-slash')
+
+if (eye && eyeSlash) {
+  let wait = false 
+  eye.addEventListener('click', async () => {
+    if (wait) return
+    wait = true
+    try {
+      await axios.patch(eye.getAttribute('link'))
+      eye.style.display = 'none'
+      eyeSlash.style.display = 'inline'
+    } catch (err) { console.error(err) }
+    wait = false
+  })
+  eyeSlash.addEventListener('click', async () => {
+    if (wait) return
+    wait = true
+    try {
+      await axios.patch(eyeSlash.getAttribute('link'))
+      eye.style.display = 'inline'
+      eyeSlash.style.display = 'none'
+    } catch (err) { console.error(err) }
+    wait = false
   })
 }

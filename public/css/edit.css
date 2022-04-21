@@ -22,10 +22,9 @@
   display: none;
   border-radius: 10px;
   width: 95vw;
-  height: 50vh;
+  height: 30px;
   max-width: 800px;
   max-height: 800px;
-  background-color: #fff;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -33,4 +32,29 @@
   transition-duration: 500ms;
   transform: translate(-50%, -50%);
   z-index: 99999;
+}
+
+.progress {
+  height: 30px
+}
+
+.table {
+  cursor: pointer;
+}
+
+.settings {
+  position: absolute;
+  transform: translateY(-60px);
+}
+.fa-gear, .fa-trash-can, .fa-eye, .fa-eye-slash, .fa-pen-to-square {
+  font-size: 2.3rem;
+  color: #C7BEA2;
+  transition-property: color;
+  transition-duration: 400ms;
+  margin-right: 15px; 
+  opacity: 0.8;
+  cursor: pointer;
+}
+.fa-gear:hover, .fa-trash-can:hover, .fa-eye:hover, .fa-eye-slash:hover, .fa-pen-to-square:hover {
+  color: #066163;
 }

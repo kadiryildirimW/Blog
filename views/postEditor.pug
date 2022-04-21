@@ -20,8 +20,32 @@ html(lang='tr')
   body
     // Navigation
     include partials/navigation
-    // Page Header
-    include partials/postHeader
+    // Post Header
+    header#masthead.masthead(style=`background-image: url('${background}')`)
+      .container.position-relative.px-4.px-lg-5
+        .row.gx-4.gx-lg-5.justify-content-center
+          .col-md-10.col-lg-8.col-xl-7
+            .post-heading
+              if (user)
+                .settings.text-center
+                  //- a(href=`/gonderiyi-sil?yazi=${handle}`)
+                  //-   i.fa-solid.fa-trash-can
+                  a#eye(link=`/gonderiyi-gizle?yazi=${handle}` style=`display: ${public ? 'inline' : 'none'};`)
+                    .fa-solid.fa-eye
+                  a#eye-slash(link=`/gonderiyi-yayina-al?yazi=${handle}` style=`display: ${public ? 'none' : 'inline'};`)
+                    i.fa-solid.fa-eye-slash
+              if (!title || title === ' ')
+                h1#title &nbsp;
+              else
+                h1#title=title
+              if (!subtitle || subtitle === ' ')
+                span#subtitle.subheading &nbsp;
+              else
+                span#subtitle.subheading=subtitle
+              span.meta
+                a(href='#!') #{user.name} 
+                | tarafından
+                | #{date} tarihinde oluşturdu
     // Post Content
     article.mb-4
       .container.px-4.px-lg-5

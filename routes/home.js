@@ -4,7 +4,9 @@ const fs = require('fs')
 router.get('/', (req, res) => {
   fs.readFile('./page/home.json', 'utf8', (err, page) => {
     if (err) console.error(err)
-    res.render('home', !page ? {} : JSON.parse(page))
+    const alert = req.flash('alert')[0]
+    page = !page ? {} : JSON.parse(page)
+    res.render('home', Object.assign(page, { alert }))
   })
 })
 
@@ -33,9 +35,11 @@ router.post('/anasayfayi-duzenle', (req, res) => {
       if (background) {
         background.mv(`./public${backgroundPath}`, (err) => {
           if (err) console.error(err)
-          res.sendStatus(200)
+        req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
+        res.sendStatus(200)
         })
       } else {
+        req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
         res.sendStatus(200)
       }
     })
