@@ -73,7 +73,7 @@ passwordConfirm.addEventListener('input', () => {
 let tr
 const result = document.getElementById('result')
 if (result)
-axios.get(`/gonderiyi-getir?sayfa=1&limit=50`).then((res) => {
+axios.get(`/search-post?page=1&limit=50`).then((res) => {
   result.innerHTML = ''
   res.data.docs.forEach((post, index) => {
     tr = document.createElement('tr')
@@ -93,7 +93,7 @@ if (searchBar) {
   searchBar.addEventListener('input', async () => {
     try {
       search = searchBar.value.trim()
-      const res = await axios.get(`/gonderiyi-getir?sayfa=1&limit=20&ara=${search}`)
+      const res = await axios.get(`/search-post?page=1&limit=20&ara=${search}`)
       result.innerHTML = ''
       res.data.docs.forEach((post, index) => {
         tr = document.createElement('tr')

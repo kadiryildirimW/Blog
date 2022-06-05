@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
@@ -37,24 +37,24 @@ html(lang='tr')
                 span#subtitle.subheading=subtitle 
     // Main Content
     main.mb-4
-      .container.px-4.px-lg-5
+      .container.px-4.px-lg-5.mb-3
         .row.gx-4.gx-lg-5.justify-content-center
           .col-md-10.col-lg-8.col-xl-7
-            form#advancedForm(action='/hakkimda-sayfasini-duzenle' redirect='/hakkimda')
+            form#advancedForm(action='/update-about-page' redirect='/about')
               .form-group
-                label(for='titleInput') Arkaplan Görseli
+                label(for='titleInput') Background
                 input#backgroundInput.form-control(type='file' accept='image/*')
               .form-group.mt-3
-                label(for='titleInput') Sayfa Başlığı
-                input#titleInput.form-control(type='text' placeholder='Başlık' value=title)
+                label(for='titleInput') Title
+                input#titleInput.form-control(type='text' value=title)
               .form-group.mt-3
-                label(for='titleInput') Alt Başlık
-                input#subtitleInput.form-control(type='text' placeholder='Alt Başlık' value=subtitle)
+                label(for='titleInput') Subtitle
+                input#subtitleInput.form-control(type='text' value=subtitle)
               .form-group.mt-3
-                label Hakkında İçeriği
+                label About Content
                 #editor(html=content)
               .form-group.mt-4
-                button.btn.btn-primary Düzenle
+                button.btn.btn-primary Update
     // Footer
     include partials/pageFooter
     // Modal

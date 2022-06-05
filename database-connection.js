@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const connection_string = process.env.CONNECTION_STRING || 'mongodb://localhost/blog'
+const connection_string = process.env.CONNECTION_STRING || 'mongodb://localhost/blog-kadir'
 
 async function connectDatabase () {
   try {

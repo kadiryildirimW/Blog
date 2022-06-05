@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1')
@@ -45,72 +45,72 @@ html(lang='tr')
           a.nav-link.link-dark(href='/' aria-current='page')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#home')
-            | Anasayfa
+            | Home
         li
-          a.nav-link.link-dark(href='/hakkimda')
+          a.nav-link.link-dark(href='/about')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#about')
-            | Hakkimda
+            | About
         li
-          a.nav-link.link-dark(href='/iletisim')
+          a.nav-link.link-dark(href='/contact')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#contact')
-            | İletişim
+            | Contact
         li
-          a.nav-link.active(href='/admin-paneli')
+          a.nav-link.active(href='/dashboard')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#dashboard')
-            | Admin Paneli
+            | Dashboard
         li
-          a.nav-link.link-dark(href='/gonderi-olustur')
+          a.nav-link.link-dark(href='/create-post')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#postAdd')
-            | Yeni Gönderi Oluştur
+            | Create Post
         li
-          a.nav-link.link-dark(href='/gonderileri-yonet')
+          a.nav-link.link-dark(href='/manage-posts')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#postManage')
-            | Gönderileri Yönet
+            | Manage Posts
       hr
-      a.nav-link.link-dark(href='/cikis-yap')
+      a.nav-link.link-dark(href='/logout')
         svg.bi.me-2(width='16' height='16')
           use(xlink:href='#logout')
-        | Çıkış Yap
+        | Logout
     .container.py-5
       include partials/alert
-      form.row.g-3(action='/kullanici-verisini-guncelle' method='POST')
-        h2 Kullanıcı Verisini Güncelle
+      form.row.g-3(action='/update-user-data' method='POST')
+        h2 Update User Information
         .col-md-6
-          label.form-label(for='name') İsim
+          label.form-label(for='name') Name
           input#name.form-control(type='text' name='name' value=user.name required)
         .col-md-6
           label.form-label(for='email') Email
           input#email.form-control(type='email' name='email' value=user.email required)
         .col-12
-          button.btn.btn-primary(type='submit') Güncelle
-      form.row.g-3.mt-5(action='/postaciyi-guncelle' method='POST' required)
-        h2 Postacı Verisini Güncelle
+          button.btn.btn-primary(type='submit') Update
+      form.row.g-3.mt-5(action='/update-mailer' method='POST' required)
+        h2 Update mailer Information
         .col-md-6
-          label.form-label(for='maillerAdress') Postacı Adresi
-          input#maillerAdress.form-control(type='email' name='maillerAdress' required)
+          label.form-label(for='mailerAdress') Mailer Adress
+          input#mailerAdress.form-control(type='email' name='mailerAdress' required)
         .col-md-6
-          label.form-label(for='maillerPass') Postacı Şifresi
-          input#maillerPass.form-control(type='text' name='maillerPass' required)
+          label.form-label(for='mailerPass') Mailer Password
+          input#mailerPass.form-control(type='text' name='mailerPass' required)
         .col-12
-            button.btn.btn-primary(type='submit') Güncelle
-      form#passwordChangeForm.row.g-3.mt-5(action='/kullanici-sifresini-degistir' method='POST')
-        h2 Şifreyi Değiştir
+            button.btn.btn-primary(type='submit') Update
+      form#passwordChangeForm.row.g-3.mt-5(action='/change-user-password' method='POST')
+        h2 Change Password
         .col-md-6
-          label.form-label(for='name') Şifre
+          label.form-label(for='name') Password
           input#password.form-control(type='password' name='password')
-          div.valid-feedback Süper!
-          div.invalid-feedback En az 8 karakterli bir şifre seçin!
+          div.valid-feedback Ok!
+          div.invalid-feedback Password min length must be 8!
         .col-md-6
-          label.form-label(for='email') Şifre Yeniden
+          label.form-label(for='email') Confirm Password
           input#passwordConfirm.form-control(type='password')
-          div.valid-feedback Süper!
-          div.invalid-feedback Şifreler Uyuşmuyor!
+          div.valid-feedback Ok!
+          div.invalid-feedback Passwords do not match!
         .col-12
-          button.btn.btn-primary(type='submit') Değiştir
+          button.btn.btn-primary(type='submit') Change
   script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript') 
   script(src='js/dashboard.js' type='text/javascript') 

@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     title Login V1
     meta(charset='UTF-8')
@@ -18,18 +18,18 @@ html(lang='tr')
         .wrap-login100
           .login100-pic.js-tilt(data-tilt='')
             img(src='assets/login.png' alt='IMG')
-          form.login100-form.validate-form(action='/kurtarma-postasi-gonder' method='POST')
+          form.login100-form.validate-form(action='/send-recovery-mail' method='POST')
             span.login100-form-title
-              | Kurtarma Postası Gönder
+              | Send recovery email
             include partials/alert
-            .wrap-input100.validate-input(data-validate='Geçersiz email')
+            .wrap-input100.validate-input(data-validate='Invalid email')
               input.input100(type='text' name='email' placeholder='Email')
               span.focus-input100
               span.symbol-input100
                 i.fa.fa-envelope(aria-hidden='true')
             .container-login100-form-btn
               button.login100-form-btn(type='submit')
-                | Gönder
+                | Send
             .text-center.p-t-12
               //- span.txt1
               //- a.txt2(href='#')

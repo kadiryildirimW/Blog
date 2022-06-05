@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
@@ -26,17 +26,17 @@ html(lang='tr')
           .col-md-10.col-lg-8.col-xl-7
           if (user)
             .settings.text-center
-              a(href=`/hakkimda-sayfasini-duzenle`)
+              a(href=`/update-about-page`)
                 i.fa-solid.fa-pen-to-square
-            .site-heading
-              if (title === ' ')
-                h1#title &nbsp;
-              else
-                h1#title=title
-              if (subtitle === ' ')
-                span#subtitle.subheading &nbsp;
-              else
-                span#subtitle.subheading=subtitle   
+          .site-heading
+            if (title === ' ')
+              h1#title &nbsp;
+            else
+              h1#title=title
+            if (subtitle === ' ')
+              span#subtitle.subheading &nbsp;
+            else
+              span#subtitle.subheading=subtitle   
     // Main Content
     main.mb-4
       .container.px-4.px-lg-5

@@ -50,7 +50,7 @@ if (subtitle && subtitleInput) {
   })
 }
 if (backgroundInput && masthead) {
-  oldBackgroundPath = masthead.style.backgroundImage.match(/(?<=url\("backgroundImages\/)(.*?)(?="\))/g)
+  oldBackgroundPath = masthead.style.backgroundImage.match(/(?<=url\("images\/background\/)(.*?)(?="\))/g)
   oldBackgroundPath = oldBackgroundPath ? oldBackgroundPath[0] : undefined
   backgroundInput.addEventListener('change', () => {
     if (backgroundInput.files[0]) {
@@ -77,32 +77,19 @@ const processRate = document.getElementById('processRate')
 let editorTag = document.getElementById('editor')
 if (editorTag) {
   let editor = new FroalaEditor('#editor', {
-    fontFamily: {
-      "Roboto,sans-serif": 'Roboto',
-      "Oswald,sans-serif": 'Oswald',
-      "Montserrat,sans-serif": 'Montserrat',
-      "'Open Sans Condensed',sans-serif": 'Open Sans Condensed'
-    },
-    fontFamilySelection: true,
-    imageManagerLoadURL: '/resimler',
+    imageManagerLoadURL: '/images',
     imageManagerLoadMethod: 'GET',
-    imageManagerDeleteURL: '/resim-sil',
+    imageManagerDeleteURL: '/delete-image',
     imageManagerDeleteMethod: 'DELETE',
     imageManagerScrollOffset: 10,
-    imageUploadURL: '/resim-kaydet',
+    imageUploadURL: '/save-image',
     imageUploadMethod: 'POST',
-    videoUploadURL: '/video-kaydet',
-    videoUploadMethod: '/POST',
     spellcheck: false,
-    saveURL: advancedForm.getAttribute('action') ? advancedForm.getAttribute('action') : window.location.href ,
+    saveURL: advancedForm.getAttribute('action') ? advancedForm.getAttribute('action') : window.location.href,
     saveMethod: 'POST',
     saveParam: 'content',
     saveParams: {},
     saveInterval: 10000,
-    events: { 
-      'image.removed': function ($img) {
-      }  
-    }
   }, function () {
     editor.html.set(editorTag.getAttribute('html'))
     editorTag.removeAttribute('html')
@@ -190,5 +177,19 @@ if (eye && eyeSlash) {
       eyeSlash.style.display = 'none'
     } catch (err) { console.error(err) }
     wait = false
+  })
+}
+
+const deleteButton = document.getElementById('delete')
+if (deleteButton) {
+  deleteButton.addEventListener('click', () => {
+    axios.delete(deleteButton.getAttribute('article-handle'))
+    .then(() => {
+      window.location.href = '/'
+    })
+    .catch(err => { 
+      console.error(err)
+      window.location.reload()
+    })
   })
 }

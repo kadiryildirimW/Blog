@@ -1,4 +1,3 @@
-const mongoosePaginate = require('mongoose-paginate-v2')
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
@@ -14,7 +13,8 @@ const postSchema = mongoose.Schema({
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    autopopulate: { maxDepth: 1, select: 'name' }
   },
   public: {
     type: Boolean,
@@ -22,6 +22,7 @@ const postSchema = mongoose.Schema({
   }
 }, { timestamps: true })
 
-mongoose.plugin(mongoosePaginate)
+mongoose.plugin(require('mongoose-paginate-v2'))
+mongoose.plugin(require('mongoose-autopopulate'))
 
 module.exports = mongoose.model('Post', postSchema)

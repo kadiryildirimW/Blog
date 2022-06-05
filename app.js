@@ -13,21 +13,6 @@ Date.prototype.fitDate = function () {
   return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
 }
 
-const cors = require('cors')
-
-// const whitelist = process.env.CORS_WHITE_LIST ? process.env.CORS_WHITE_LIST.split(',') : ['htttp://localhost:8080']
-const corsOptions = {
-  // origin: function (origin, callback) {
-  //   if (whitelist.indexOf(origin) !== -1) {
-  //     callback(null, true)
-  //   } else {
-  //     callback(new Error('Not allowed by CORS'))
-  //   }
-  // }
-}
-
-app.use(cors(corsOptions))
-
 if (!process.env.DISTRIBUTION) {
   require('dotenv').config()
 }

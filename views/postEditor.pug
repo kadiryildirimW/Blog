@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
@@ -21,7 +21,7 @@ html(lang='tr')
     // Navigation
     include partials/navigation
     // Post Header
-    header#masthead.masthead(style=`background-image: url('${background}')`)
+    header#masthead.masthead(style=`background-image: url('${post.background}')`)
       .container.position-relative.px-4.px-lg-5
         .row.gx-4.gx-lg-5.justify-content-center
           .col-md-10.col-lg-8.col-xl-7
@@ -30,22 +30,22 @@ html(lang='tr')
                 .settings.text-center
                   //- a(href=`/gonderiyi-sil?yazi=${handle}`)
                   //-   i.fa-solid.fa-trash-can
-                  a#eye(link=`/gonderiyi-gizle?yazi=${handle}` style=`display: ${public ? 'inline' : 'none'};`)
+                  a#eye(link=`/hide-post?article=${post.handle}` style=`display: ${post.public ? 'inline' : 'none'};`)
                     .fa-solid.fa-eye
-                  a#eye-slash(link=`/gonderiyi-yayina-al?yazi=${handle}` style=`display: ${public ? 'none' : 'inline'};`)
+                  a#eye-slash(link=`/publish-post?article=${post.handle}` style=`display: ${!post.public ? 'inline' : 'none'};`)
                     i.fa-solid.fa-eye-slash
-              if (!title || title === ' ')
+              if (!post.title || post.title === ' ')
                 h1#title &nbsp;
               else
-                h1#title=title
-              if (!subtitle || subtitle === ' ')
+                h1#title=post.title
+              if (!post.subtitle || post.subtitle === ' ')
                 span#subtitle.subheading &nbsp;
               else
-                span#subtitle.subheading=subtitle
+                span#subtitle.subheading=post.subtitle
               span.meta
-                a(href='#!') #{user.name} 
-                | tarafından
-                | #{date} tarihinde oluşturdu
+                | Posted by&nbsp;
+                a(href="#") #{post.author.name}&nbsp;
+                | #{post.date}
     // Post Content
     article.mb-4
       .container.px-4.px-lg-5
@@ -53,19 +53,19 @@ html(lang='tr')
           .col-md-10.col-lg-8.col-xl-7
             form#advancedForm.post-form
               .form-group
-                label(for='titleInput') Arkaplan Görseli
+                label(for='titleInput') Background
                 input#backgroundInput.form-control(type='file' accept='image/*')
               .form-group.mt-3
-                label(for='titleInput') Sayfa Başlığı
-                input#titleInput.form-control(type='text' placeholder='Başlık' value=title)
+                label(for='titleInput') Title
+                input#titleInput.form-control(type='text' value=post.title)
               .form-group.mt-3
-                label(for='titleInput') Alt Başlık
-                input#subtitleInput.form-control(type='text' placeholder='Alt Başlık' value=subtitle)
+                label(for='titleInput') Subtitle
+                input#subtitleInput.form-control(type='text' value=post.subtitle)
               .form-group.mt-3
-                label Gönderi İçeriği
-                #editor(html=content)
+                label Post Content
+                #editor(html=post.content)
               .form-group.mt-4
-                button.btn.btn-primary Düzenle
+                button.btn.btn-primary Update
     // Footer
     include partials/pageFooter
     // Modal

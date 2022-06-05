@@ -1,9 +1,9 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    title Admin Paneli
+    title Dashboard
     link(href='bootstrap5/css/bootstrap.min.css' rel='stylesheet')
     link(href='css/dashboard.css' rel='stylesheet')
     meta(charset='utf-8')
@@ -48,37 +48,37 @@ html(lang='tr')
           a.nav-link.link-dark(href='/' aria-current='page')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#home')
-            | Anasayfa
+            | Home
         li
-          a.nav-link.link-dark(href='/hakkimda')
+          a.nav-link.link-dark(href='/about')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#about')
-            | Hakkimda
+            | About
         li
-          a.nav-link.link-dark(href='/iletisim')
+          a.nav-link.link-dark(href='/contact')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#contact')
-            | İletişim
+            | Contact
         li
-          a.nav-link.link-dark(href='/admin-paneli')
+          a.nav-link.link-dark(href='/dashboard')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#dashboard')
-            | Admin Paneli
+            | Dashboard
         li
-          a.nav-link.link-dark(href='/gonderi-olustur')
+          a.nav-link.link-dark(href='/create-post')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#postAdd')
-            | Yeni Gönderi Oluştur
+            | Create New Post
         li
-          a.nav-link.active(href='/gonderileri-yonet')
+          a.nav-link.active(href='/manage-posts')
             svg.bi.me-2(width='16' height='16')
               use(xlink:href='#postManage')
-            | Gönderileri Yönet
+            | Manage Posts
       hr
-      a.nav-link.link-dark(href='/cikis-yap')
+      a.nav-link.link-dark(href='/logout')
         svg.bi.me-2(width='16' height='16')
           use(xlink:href='#logout')
-        | Çıkış Yap
+        | Logout
     .container.py-5
       include partials/alert
       .input-group.flex-nowrap.input-group-lg.mb-5
@@ -90,8 +90,8 @@ html(lang='tr')
         thead
           tr
             th(scope='col') #
-            th(scope='col') Başlık
-            th(scope='col') Tarih
+            th(scope='col') Title
+            th(scope='col') Date
         tbody#result
 
   script(src='bootstrap5/js/bootstrap.bundle.min.js' type='text/javascript') 

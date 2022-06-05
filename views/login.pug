@@ -1,5 +1,5 @@
 doctype html
-html(lang='tr')
+html(lang='en')
   head
     title Login V1
     meta(charset='UTF-8')
@@ -18,27 +18,27 @@ html(lang='tr')
         .wrap-login100
           .login100-pic.js-tilt(data-tilt='')
             img(src='assets/login.png' alt='IMG')
-          form.login100-form.validate-form(action='/giris' method='POST')
+          form.login100-form.validate-form(action='/login' method='POST')
             span.login100-form-title
-              | Üye Girişi
+              | Member Login
             include partials/alert
-            .wrap-input100.validate-input(data-validate='Geçersiz email')
+            .wrap-input100.validate-input(data-validate='Invalid email')
               input.input100(type='text' name='email' placeholder='Email' value=email)
               span.focus-input100
               span.symbol-input100
                 i.fa.fa-envelope(aria-hidden='true')
-            .wrap-input100.validate-input(data-validate='Zorunlu alan')
-              input.input100(type='password' name='password' placeholder='Şifre')
+            .wrap-input100.validate-input(data-validate='Required')
+              input.input100(type='password' name='password' placeholder='Password')
               span.focus-input100
               span.symbol-input100
                 i.fa.fa-lock(aria-hidden='true')
             .container-login100-form-btn
               button.login100-form-btn(type='submit')
-                | Giriş Yap
+                | login
             .text-center.p-t-12
               //- span.txt1
-              a.txt2(href='/kurtarma-postasi-gonder')
-                | Şifremi Unuttum!
+              a.txt2(href='/send-recovery-mail')
+                | Forgot password!
                 //- | Username / Password?
             .text-center.p-t-136
               a.txt2(href='#')

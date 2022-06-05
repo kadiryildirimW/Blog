@@ -1,6 +1,8 @@
 const router = require('express').Router()
 
-router.get('/admin-paneli', (req, res) =>  {
+const { ensureAuthenticated } = require('../auth') 
+
+router.get('/dashboard', ensureAuthenticated, (req, res) =>  {
   res.render('dashboard')
 })
 

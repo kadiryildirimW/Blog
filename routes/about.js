@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const fs = require('fs')
 
-router.get('/hakkimda', (req, res) => { 
+const { ensureAuthenticated } = require('../auth') 
+
+router.get('/about', (req, res) => { 
   fs.readFile('./page/about.json', 'utf8', (err, page) => {
     if (err) console.error(err)
     const alert = req.flash('alert')[0]
@@ -10,7 +12,7 @@ router.get('/hakkimda', (req, res) => {
   })
 })
 
-router.get('/hakkimda-sayfasini-duzenle', (req, res) => { 
+router.get('/update-about-page', ensureAuthenticated, (req, res) => { 
   fs.readFile('./page/about.json', 'utf8', (err, page) => {
     if (err) console.error(err)
     res.render('editAbout', !page ? {} : JSON.parse(page))
@@ -18,10 +20,10 @@ router.get('/hakkimda-sayfasini-duzenle', (req, res) => {
 })
 
 
-router.post('/hakkimda-sayfasini-duzenle', (req, res) => {
+router.post('/update-about-page', ensureAuthenticated, (req, res) => {
   const { title, subtitle, content } = req.body
   const background = req.files ? req.files.background : undefined
-  const backgroundPath = background ? `/backgroundImages/about.${background.mimetype.replace('image/', '')}` : ''
+  const backgroundPath = background ? `/images/background/about.${background.mimetype.replace('image/', '')}` : ''
   fs.readFile('./page/about.json', 'utf8', (err, page) => {
     if (err) console.error(err)
     page = !page ? {} : JSON.parse(page)
@@ -37,11 +39,11 @@ router.post('/hakkimda-sayfasini-duzenle', (req, res) => {
       if (background) {
         background.mv(`./public${backgroundPath}`, (err) => {
           if (err) console.error(err)
-          req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
+          req.flash('alert', { type: 'success', text: 'Update successful' })
           res.sendStatus(200)
         })
       } else {
-        req.flash('alert', { type: 'success', text: 'Güncelleme Başarılı' })
+        req.flash('alert', { type: 'success', text: 'Update successful' })
         res.sendStatus(200)
       }
     })

@@ -6,18 +6,20 @@ const nodemailer = require('nodemailer')
 const User = require('../models/user')
 const { v4: uuidv4 } = require('uuid');
 
-router.get('/giris', (req, res) => { 
+const { ensureAuthenticated } = require('../auth')
+
+router.get('/login', (req, res) => { 
   const alert = req.flash('alert')[0]
   res.render('login', { alert })
 })
 
-router.post('/giris', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body
     const user = await User.findOne({ email })
     if (!user) {
       res.render('login', {
-        alert: { text: 'Kullanıcı bulunamadı, emailinizi kontrol edin!', type: 'danger' },
+        alert: { text: 'User not found, please check your email!', type: 'danger' },
         email
       })
       return
@@ -28,12 +30,12 @@ router.post('/giris', async (req, res) => {
       const session_duration = parseInt(process.env.SESSION_DURATION) || 1000 * 60 * 60 * 24 * 365 
       const token = jwt.sign({ _id: user._id }, secret_key, { expiresIn: session_duration });
       res.cookie('token', token, { expires: new Date(Date.now() + parseInt(session_duration))  })
-      req.flash('alert', { text: 'Giriş başarılı.', type: 'success' })
+      req.flash('alert', { text: 'Welcome boss!', type: 'success' })
       req.flash('email', email)
       res.redirect('/')
     } else {
       res.render('login', {
-        alert: { text: 'Yanlış şifre.', type: 'danger' },
+        alert: { text: 'Wrong password!', type: 'danger' },
         email
       })
     }
@@ -42,7 +44,7 @@ router.post('/giris', async (req, res) => {
   }
 })
 
-router.post('/kullanici-verisini-guncelle', async (req, res) => {
+router.post('/update-user-data', ensureAuthenticated, async (req, res) => {
   try {
     const { name, email } = req.body
     const update = {}
@@ -56,7 +58,7 @@ router.post('/kullanici-verisini-guncelle', async (req, res) => {
       },
       alert: {
         type: 'success',
-        text: 'Kullanıcı verisi güncellendi',
+        text: 'User information updated.',
       }
     })
   } catch (err) {
@@ -64,14 +66,14 @@ router.post('/kullanici-verisini-guncelle', async (req, res) => {
   }
 })
 
-router.post('/kullanici-sifresini-degistir', async (req, res) => {
+router.post('/change-user-password', ensureAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     await User.updateOne({ _id: req.user._id }, { password: hashedPassword })
     res.render('dashboard', {
       alert: {
         type: 'success',
-        text: 'Şifre başarılı bir şekilde değiştirildi',
+        text: 'Password changed successfully.',
       }
     })
   } catch (err) {
@@ -79,58 +81,57 @@ router.post('/kullanici-sifresini-degistir', async (req, res) => {
   }
 })
 
-router.get('/kurtarma-postasi-gonder', async (req, res) => { res.render('recoveryMail') })
-router.post('/kurtarma-postasi-gonder', async (req, res) => {
+router.get('/send-recovery-mail', async (req, res) => { res.render('recoveryMail') })
+router.post('/send-recovery-mail', async (req, res) => {
   try {
     const { email } = req.body
     const recoveryKey = uuidv4()
     const user = await User.findOneAndUpdate({ email }, { recoveryKey })
     if (!user) {
       res.render('recoveryMail', {
-        alert: { type: 'danger', text: 'Kayıtlı mail adresi bulunamadı' }
+        alert: { type: 'danger', text: 'User not found!' }
       })
       return
     }
-    const { maillerAdress, maillerPass } = JSON.parse(fs.readFileSync('mailler.json', 'utf8'))
+    const { mailerAdress, mailerPass } = JSON.parse(fs.readFileSync('mailer.json', 'utf8'))
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: maillerAdress, // generated ethereal user
-        pass: maillerPass // generated ethereal password
+        user: mailerAdress, // generated ethereal user
+        pass: mailerPass // generated ethereal password
       },
       connectionTimeout: 5 * 60 * 1000, // 5 min
     })
-    const recoveryUrl = `${req.protocol}://${req.get('host')}/sifreyi-sifirla?anahtar=${recoveryKey}`;
+    const recoveryUrl = `${req.protocol}://${req.get('host')}/change-password?key=${recoveryKey}`;
     let info = await transporter.sendMail({
       from:  ``, // sender address
       to: email, // list of receivers
-      subject: 'Şifre Sıfırlama', // Subject line
+      subject: 'Reset Password', // Subject line
       html: `
-        <a href="${recoveryUrl}">Şifreni sıfırlamak için bu linke tıkla</a>
+        <a href="${recoveryUrl}">Click this link to reset your password.</a>
       ` // html body
     })
-    req.flash('alert', { type: 'success', text: 'Kurtarma maili gönderildi' })
-    res.redirect('/giris')
+    req.flash('alert', { type: 'success', text: 'Rescue mail sent.' })
+    res.redirect('/login')
   } catch (err) {
     console.error(err)
   }
 })
 
-router.get('/sifreyi-sifirla', async (req, res) => { res.render('resetPassword') })
-router.post('/sifreyi-sifirla', async (req, res) => {
+router.get('/change-password', async (req, res) => { res.render('resetPassword') })
+router.post('/change-password', async (req, res) => {
   try {
     const { password, confirmPassword } = req.body
-    const { anahtar: key } = req.query
+    const { key } = req.query
     const user = await User.findOne({ recoveryKey: key })
     if (!user || user.recoveryKey === 'not-valid') {
-      res.render('recoveryMail', { alert: { type: 'danger', text: 'Geçersiz link' } })
+      res.render('recoveryMail', { alert: { type: 'danger', text: 'Unvalid link!' } })
       return
     }
-    console.log(password, confirmPassword)
     if (password !== confirmPassword) {
-      res.render('resetPassword', { alert: { type: 'danger', text: 'Şifreler uyuşmuyor' } })
+      res.render('resetPassword', { alert: { type: 'danger', text: 'Password do not match!' } })
       return
     }
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -138,7 +139,7 @@ router.post('/sifreyi-sifirla', async (req, res) => {
     res.render('login', {
       alert: {
         type: 'success',
-        text: 'Şifre başarılı bir şekilde değiştirildi',
+        text: 'Password changed successful.'
       }
     })
   } catch (err) {
@@ -147,7 +148,7 @@ router.post('/sifreyi-sifirla', async (req, res) => {
 })
 
 
-router.post('/kayit' , async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { email, password, name } = req.body
     const user = {}
@@ -155,13 +156,14 @@ router.post('/kayit' , async (req, res) => {
     user.name = name
     user.password = await bcrypt.hash(password, 10)
     await User.create(user)
+    res.sendStatus(200)
   } catch (err) {
     console.error(err)
   }
 })
 
-router.get('/cikis-yap', (req, res) => {
-  req.flash('alert', { type: 'success', text: 'Oturum sonlandırıldı' })
+router.get('/logout', ensureAuthenticated, (req, res) => {
+  req.flash('alert', { type: 'warning', text: 'Session terminated!' })
   res.clearCookie('token')
   res.redirect('/')
 })
